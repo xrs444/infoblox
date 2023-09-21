@@ -13,19 +13,6 @@
 # Functions:
 
 function Invoke-XRSINFBXAPICall {
-  param (
-    [Parameter (Mandatory = $true,HelpMessage="Full request URI including port")] [String]$RequestUri,
-    [Parameter (Mandatory = $false,HelpMessage="Body of the request")] [string]$Payload = "{}",
-    [Parameter (Mandatory = $true,HelpMessage="REST call Method GET/PUT/ETC")] [String]$Method,
-    [Parameter (Mandatory = $false,HelpMessage="Do not convert the native JSON output")] [bool]$DoNotConvert = $false,
-    [Parameter (Mandatory = $false,HelpMessage="Convert the Payload to JSON if you don't want to")] [bool]$ConvertPayloadToJson = $false,
-    [Parameter (Mandatory = $true,HelpMessage="Credentials as PSCredential object")]
-    [ValidateNotNull()]
-    [System.Management.Automation.PSCredential]
-    [System.Management.Automation.Credential()]
-    $Credential = [System.Management.Automation.PSCredential]::empty
-  )
-
 
 <#
   .SYNOPSIS
@@ -59,6 +46,21 @@ function Invoke-XRSINFBXAPICall {
   Invoke-XRSInfobloxAPICall -RequestURI "https://<GRIDURL>/wapi/v2.11.2/grid/b25lLmNsdXN0ZXIkMA:Infoblox?_function=restartservices" -Method GET -Credential $Credentials
 
 #>
+# Need Powershell 7+ for creds handling
+#Requires -Version 7.0
+
+  param (
+    [Parameter (Mandatory = $true,HelpMessage="Full request URI including port")] [String]$RequestUri,
+    [Parameter (Mandatory = $false,HelpMessage="Body of the request")] [string]$Payload = "{}",
+    [Parameter (Mandatory = $true,HelpMessage="REST call Method GET/PUT/ETC")] [String]$Method,
+    [Parameter (Mandatory = $false,HelpMessage="Do not convert the native JSON output")] [bool]$DoNotConvert = $false,
+    [Parameter (Mandatory = $false,HelpMessage="Convert the Payload to JSON if you don't want to")] [bool]$ConvertPayloadToJson = $false,
+    [Parameter (Mandatory = $true,HelpMessage="Credentials as PSCredential object")]
+    [ValidateNotNull()]
+    [System.Management.Automation.PSCredential]
+    [System.Management.Automation.Credential()]
+    $Credential = [System.Management.Automation.PSCredential]::empty
+  )
 
 # setup the request headers
 $Headers = @{
